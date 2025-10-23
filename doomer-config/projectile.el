@@ -16,7 +16,7 @@
 
 	("C-c s s" . counsel-git-grep)
 	("C-c s g" . projectile-grep)
-	("C-c x x" . doomer/run-konsole)
+	("C-c x x" . doomer/run-wezterm)
 	("C-t" . doomer/run-vterm-toggle)
 	("M-{" . projectile-previous-project-buffer)
 	("M-}" . projectile-next-project-buffer)
@@ -32,27 +32,32 @@
   (projectile-mode +1)
 
   (defun doomer/run-st ()
-    "Try to run st in (projectile-project-root)
+    "DEPRECATED Try to run st in (projectile-project-root)
 if (projectile-project-rool) is nil, run st in file directory"
     (interactive)
     (doomer/run-external-terminal "st" "-d")
     )
 
   (defun doomer/run-konsole ()
-    "Try to run konsole in (projectile-project-root)
+    "DEPRECATED Try to run konsole in (projectile-project-root)
 if (projectile-project-rool) is nil, run konsole in file directory"
     (interactive)
     (doomer/run-external-terminal "konsole" "--workdir")
     )
 
-  (defun doomer/run-external-terminal (terminal directory-option)
-    "Try to run terminal in (projectile-project-root)
-if (projectile-project-rool) is nil, run terminal in file directory"
-    (if (projectile-project-root)
-	(call-process terminal nil 0 nil directory-option (projectile-project-root))
-      (call-process terminal nil 0)
-      )
-    )
+  (defun doomer/run-wezterm ()
+    "Run WezTerm in the project root or current file directory."
+    (interactive)
+    (doomer/run-external-terminal "wezterm" "start" "--cwd"))
+
+  (defun doomer/run-external-terminal (terminal command &optional option)
+    "Run TERMINAL with COMMAND in the project root or current directory.
+If Projectile project root exists, use it as cwd."
+    (let* ((dir (or (and (fboundp 'projectile-project-root)
+			 (projectile-project-root))
+                    default-directory))
+           (args (if option (list command option dir) (list command dir))))
+      (apply #'start-process terminal nil terminal args)))
 
   (defun doomer/run-vterm ()
     "Try to run vterm in (projectile-project-root)
