@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: task-go
+# key: tg
+# expand-env: ((yas-indent-line 'fixed))
+# --
+version: '3'
+
+dotenv: ['.env']
+
+tasks:
+  default:
+    cmds:
+      - task -l
+
+  vet:
+    desc: "Vet source"
+    cmds:
+      - go vet ./...
+
+  test:
+    desc: "Run test"
+    cmds:
+      - go test ./...
+
+  test-integration:
+    desc: "Run integration tests"
+    cmds:
+      - go test -tags=integration ./...

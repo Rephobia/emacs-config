@@ -15,7 +15,9 @@
 
   (use-package yasnippet-snippets
     :ensure t)
+
   (add-hook 'prog-mode-hook #'yas-minor-mode)
+  (add-hook 'yaml-mode-hook #'yas-minor-mode)
 
   :config
   (add-to-list 'yas-snippet-dirs "~/.emacs.d/doomer-config/snippets/") ;; always before (yas-reload-all)

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: task-base
+# key: td
+# --
+version: '3'
+
+dotenv: ['.env']
+
+tasks:
+  default:
+    cmds:
+      - task -l
