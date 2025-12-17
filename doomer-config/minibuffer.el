@@ -4,7 +4,7 @@
   :ensure t
   :bind
   (:map doomer/keymap
-	("C-s" . swiper)
+	("C-s" . doomer/swiper-toggle)
 	("C-x b" . ivy-switch-buffer)
 	)
   (:map ivy-minibuffer-map
@@ -35,6 +35,13 @@
           ;; Открываем файл как root в текущем буфере
           (find-alternate-file tramp-file-name))
       (message "Current buffer is not visiting a file!")))
+
+  (defun doomer/swiper-toggle ()
+    "Toggle swiper: quit if swiper/ivy is active, otherwise start swiper."
+    (interactive)
+    (if (minibufferp (window-buffer (selected-window)))
+        (abort-recursive-edit)
+      (swiper)))
   )
 
 
