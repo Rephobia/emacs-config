@@ -6,7 +6,8 @@
   (setq lsp-keymap-prefix "C-l")
   :config
   (setq lsp-enable-snippet nil
-        lsp-gopls-staticcheck t)
+        lsp-gopls-staticcheck t
+        lsp-go-build-flags ["-tags=integration"])
   )
 
 (use-package lsp-ui
